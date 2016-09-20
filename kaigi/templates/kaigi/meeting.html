@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="en" ng-app="MeetingPulse" ng-controller="MeetingPulseController">
+<head>
+    <meta charset="utf-8">
+
+    <title>Meeting Pulse</title>
+
+    <link rel="stylesheet" href="/media/css/mp.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular-cookies.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <script src="/media/js/line-chart.min.js"></script>
+    <script src="/media/js/mp.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script>
+        angular.module('MeetingPulse').constant('DjangoConstants', {
+            meeting_id: '{{ meeting_id }}',
+        });
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>{[meeting.subject]}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-10">
+            <linechart data="lineData" options="lineOptions" height=300></linechart>
+        </div>
+        <div class="col-xs-2">
+            <p>How's the meeting?</p>
+            <div class="list-group">
+                <button type="button" id="wow" class="list-group-item list-group-item-success" style="height:70px;" ng-click="postRating(100)">Great</button>
+                <button type="button" id="ok" class="list-group-item list-group-item-info" style="height:70px;" ng-click="postRating(50)">Okay</button>
+                <button type="button" id="death" class="list-group-item list-group-item-danger" style="height:70px;" ng-click="postRating(0)">Awful</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="chatbox" schroll-bottom="chats">
+                <p ng-repeat="chat in chats"><strong>{[ chat.name ]}</strong> {[ chat.message ]}</p>
+            </div>
+            <form autocomplete="off">
+                <input type="text" class="form-control" ng-model="message" placeholder="Say something" autocomplete="off">
+                <button type="submit" class="btn btn-default" ng-click="postChat()">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
